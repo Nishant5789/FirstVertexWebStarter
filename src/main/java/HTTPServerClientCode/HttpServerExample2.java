@@ -22,7 +22,7 @@ public class HttpServerExample2 extends AbstractVerticle {
       if (request.path().equals("/")) {
         response.end("Welcome to the Vert.x HTTP Server!");
       }
-        else if (request.path().equals("/chunked")) {
+      else if (request.path().equals("/chunked")) {
         response.setChunked(true);
         response.write("Chunk 1\n");
         response.write("Chunk 2\n");

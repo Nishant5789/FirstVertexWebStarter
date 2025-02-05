@@ -2,8 +2,6 @@ package HTTPServerClientCode;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerRequest;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.MultiMap;
 
 public class VertxHttpServer {
