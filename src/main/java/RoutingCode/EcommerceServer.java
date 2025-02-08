@@ -12,13 +12,25 @@ public class EcommerceServer extends AbstractVerticle {
   public void start(Promise<Void> startPromise) {
     Router router = Router.router(vertx);
 
+//    router.route().handler()
+
+//    router.route("/hello").order(2).handler(ctx -> {
+//      ctx.response().end("Hello, World!");
+//    });
+//    router.route("/hello").order(-1).handler(ctx -> {
+//      ctx.response().end("Hello again!");
+//    });
+
+
     // 1. Basic Route
-    router.route("/").handler(ctx -> ctx.response().end("Welcome to the E-commerce API"));
+    router.route("/").handler(
+      ctx -> ctx.response()
+      .end("Welcome to the E-commerce API"));
 
     // 2. Handling Requests Sequentially
     router.route("/info").handler(ctx -> {
       ctx.response().setChunked(true).write("Step 1\n");
-      ctx.next();
+      ctx.vertx().setTimer(5000, tid -> ctx.next());
     });
 
     router.route("/info").handler(ctx -> {
@@ -32,7 +44,9 @@ public class EcommerceServer extends AbstractVerticle {
     });
 
     // 3. JSON Response
-    router.get("/status").respond(ctx -> Future.succeededFuture(new JsonObject().put("status", "running")));
+    router.get("/status").respond(ctx ->
+      Future.succeededFuture(new JsonObject().put("status", "running"))
+    );
 
     // 4. Blocking Handler
     router.route("/heavy-task").blockingHandler(ctx -> {

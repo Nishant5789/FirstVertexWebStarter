@@ -93,7 +93,6 @@ public class VertxFileSystemExample {
                 });
               }
             });
-
           // 9. Closing the AsyncFile
           file.close().onComplete(ar -> System.out.println("File closed"));
         }
