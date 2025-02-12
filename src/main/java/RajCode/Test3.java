@@ -53,7 +53,6 @@ public class Test3 extends AbstractVerticle {
     return promise.future();
   }
 
-
   public Future<String> hello2() {
     Promise<String> promise = Promise.promise();
     vertx.setTimer(5000, id -> {

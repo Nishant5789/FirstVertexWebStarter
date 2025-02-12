@@ -13,13 +13,8 @@ public class Test extends AbstractVerticle {
     System.out.println(System.currentTimeMillis()/1000);
     System.out.println("start");
     System.out.println(System.currentTimeMillis()/1000);
-    System.out.println("calling hello method");
+//    System.out.println("calling hello method");
 
-    try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
 
     hello1().onComplete(r->{
       if(r.succeeded()){
@@ -28,7 +23,7 @@ public class Test extends AbstractVerticle {
           System.out.println("promise completed hello sleeping for 2 second");
           Thread.sleep(5000);
           System.out.println(System.currentTimeMillis()/1000);
-          System.out.println("hello sleep complete");
+          System.out.println("hello1 sleep complete");
         } catch (InterruptedException e) {
           throw new RuntimeException(e);
         }
@@ -38,7 +33,12 @@ public class Test extends AbstractVerticle {
       }
     });
 
-    System.out.println("calling hello2 method");
+//    System.out.println("calling hello2 method");
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
 
     hello2().onComplete(r->{
       if(r.succeeded()){
@@ -56,19 +56,18 @@ public class Test extends AbstractVerticle {
         r.cause().printStackTrace();
       }
     });
+
     System.out.println(System.currentTimeMillis()/1000);
     System.out.println("end");
   }
 
-
   public Future<String> hello1(){
     Promise<String> promise = Promise.promise();
-    vertx.setTimer(1000, id -> {
+    vertx.setTimer(2000, id -> {
       promise.complete("hello");
     });
     return promise.future();
   }
-
 
   public Future<String> hello2(){
     Promise<String> promise = Promise.promise();
@@ -78,10 +77,10 @@ public class Test extends AbstractVerticle {
     return promise.future();
   }
 
-
   public void stop() {
     System.out.println("stop");
   }
+
   public static void main(String[] args) {
     Vertx vertx = Vertx.vertx();
     vertx.deployVerticle(new Test());

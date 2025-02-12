@@ -84,8 +84,7 @@ public class Test4 extends AbstractVerticle {
 
   public static void main(String[] args) {
     Vertx vertx = Vertx.vertx();
-    DeploymentOptions options = new DeploymentOptions()
-      .setWorker(true);
+    DeploymentOptions options = new DeploymentOptions();
     vertx.deployVerticle(new Test4(), options);
   }
 }

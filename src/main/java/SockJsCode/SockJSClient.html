@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://unpkg.com/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+   <title>SockJS Client</title>
+</head>
+<body>
+   <script>
+       var sock = new SockJS('http://localhost:8080/myapp');
+       sock.onopen = function() {
+           console.log('Connected to server');
+           sock.send('Hello Server');
+       };
+       sock.onmessage = function(e) {
+           console.log('Message from server:', e.data);
+       };
+       sock.onclose = function() {
+           console.log('Disconnected from server');
+       };
+       setInterval(() => {
+           sock.send('Ping from client');
+       }, 10000);
+   </script>
+</body>
+</html>

@@ -1,8 +1,6 @@
 package EventloopThreadCode;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Vertx;
-import io.vertx.core.VertxOptions;
+import io.vertx.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +22,12 @@ public class EventLoopVerticlesExample {
           threadCount.put(threadName, threadCount.getOrDefault(threadName, 0) + 1);
           latch.countDown();
         }
-      });
+      }, new DeploymentOptions().setThreadingModel(ThreadingModel.EVENT_LOOP));
     }
 
     latch.await();
     System.out.println("Thread distribution for event loop verticles:");
     threadCount.forEach((thread, count) -> System.out.println(thread + " = " + count));
-
     vertx.close();
   }
 }

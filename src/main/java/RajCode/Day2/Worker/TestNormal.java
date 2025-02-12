@@ -28,7 +28,7 @@ public class TestNormal extends AbstractVerticle {
 class InnerTestNormal1 extends AbstractVerticle{
   @Override
   public void start() throws Exception {
-    System.out.println(Thread.currentThread().getName() + " - test Innernormal verticle deploy started");
+    System.out.println(Thread.currentThread().getName() + " - test Inner normal vertical deploy started");
   }
 
   @Override
@@ -100,6 +100,5 @@ class InnerTestNormal2 extends AbstractVerticle{
     });
     return promise.future();
   }
-
 }
 

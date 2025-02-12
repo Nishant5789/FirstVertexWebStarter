@@ -13,8 +13,8 @@ public class VertxHttpClientExample {
     // 1. Creating an HTTP Client
     // Default client
 //    HttpClient defaultClient = vertx.createHttpClient();
-
-    // Client with custom options
+//
+//    // Client with custom options
 //    HttpClientOptions options = new HttpClientOptions()
 //      .setKeepAlive(false);
     // Example for disabling keep-alive
@@ -40,48 +40,49 @@ public class VertxHttpClientExample {
 //    PoolOptions poolOptions = new PoolOptions().setHttp1MaxSize(10);
 
     // 4. Making Requests (GET request example)
-//    HttpClient clientWithOptions = vertx.createHttpClient();
-//    clientWithOptions
-//      .request(HttpMethod.GET, 8080, "localhost", "/")
-//      .onComplete(ar1 -> {
-//        if (ar1.succeeded()) {
-//          HttpClientRequest request = ar1.result();
-//          request.send().onComplete(ar2 -> {
-//            if (ar2.succeeded()) {
-//              System.out.println("Response Status: " + ar2.result().statusMessage());
-//            }
-//          });
-//        }
-//      });
-
-//    // 5. Writing Headers
-//    MultiMap headers = HttpHeaders.add("content-type", "application/json");
-//    clientWithOptions.request(HttpMethod.GET, 8080, "myserver.com", "/some-uri")
-//      .onComplete(ar1 -> {
-//        if (ar1.succeeded()) {
-//          HttpClientRequest request = ar1.result();
-//          request.headers().addAll(headers);
-//        }
-//      });
-
-    // 6. Sending Requests with Body (String, Buffer, Stream)
     HttpClient clientWithOptions = vertx.createHttpClient();
-    clientWithOptions.request(HttpMethod.POST, 8080, "localhost", "/upload")
+    clientWithOptions
+      .request(HttpMethod.GET, 8080, "localhost", "/")
       .onComplete(ar1 -> {
         if (ar1.succeeded()) {
           HttpClientRequest request = ar1.result();
-          request.putHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-          // String Body
-          request.send("Hello World");
-
-          // Buffer Body
-          request.send(Buffer.buffer("Hello World"));
-
-          // Streaming Body
-          request.putHeader(HttpHeaders.CONTENT_LENGTH, "1000")
-            .send(Buffer.buffer("Stream data"));
+          request.send().onComplete(ar2 -> {
+            if (ar2.succeeded()) {
+              System.out.println("Response Status: " + ar2.result().statusMessage());
+            }
+          });
         }
       });
+
+    // 5. Writing Headers
+//    HttpHeaders.headers("content-type", "application/json")
+    MultiMap headers = null;
+    clientWithOptions.request(HttpMethod.GET, 8080, "myserver.com", "/some-uri")
+      .onComplete(ar1 -> {
+        if (ar1.succeeded()) {
+          HttpClientRequest request = ar1.result();
+          request.headers().addAll(headers);
+        }
+      });
+
+    // 6. Sending Requests with Body (String, Buffer, Stream)
+//    HttpClient clientWithOptions = vertx.createHttpClient();
+//    clientWithOptions.request(HttpMethod.POST, 8080, "localhost", "/upload")
+//      .onComplete(ar1 -> {
+//        if (ar1.succeeded()) {
+//          HttpClientRequest request = ar1.result();
+//          request.putHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+//          // String Body
+//          request.send("Hello World");
+//
+//          // Buffer Body
+//          request.send(Buffer.buffer("Hello World"));
+//
+//          // Streaming Body
+//          request.putHeader(HttpHeaders.CONTENT_LENGTH, "1000")
+//            .send(Buffer.buffer("Stream data"));
+//        }
+//      });
 
     // 7. Writing & Ending Requests
 //    clientWithOptions.request(HttpMethod.POST, 8080, "myserver.com", "/submit")

@@ -1,0 +1,17 @@
+Problem Statement:
+Create a simple Vert.x Timer-based Async Workflow that demonstrates various Vert.x Future methods.
+
+A Verticle schedules a timer (using setTimer()) to simulate an asynchronous task.
+The task succeeds or fails based on a condition.
+Various Future methods are used to process the outcome.
+
+Concepts Covered:
+setTimer() → Simulates async task.
+Future.compose() → Chains another future.
+onSuccess() → Handles success.
+onFailure() → Handles failure.
+onComplete() → Runs after success/failure.
+eventually() → Cleanup action.
+otherwise() → Provides default value in case of failure.
+flatMap() → Transforms result.
+toCompletionStage() → Converts Future to Java's CompletionStage.
