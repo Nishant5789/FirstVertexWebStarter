@@ -22,7 +22,7 @@ public class future {
      throw new RuntimeException();
     }
     catch (Exception e){
-      promise.fail("failed");
+//      promise.fail("failed");
     }
     return promise.future();
   }

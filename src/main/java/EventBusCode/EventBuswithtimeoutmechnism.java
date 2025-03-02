@@ -5,31 +5,31 @@ import io.vertx.core.eventbus.DeliveryOptions;
 
 public class EventBuswithtimeoutmechnism {
   public static void main(String[] args) {
-//    Evenbusblockingtest1();
-    Vertx vertx = Vertx.vertx();
-    // Deploy the receiver verticle
-    vertx.deployVerticle(new MessageReceiver(), new DeploymentOptions().setThreadingModel(ThreadingModel.EVENT_LOOP));
-//    // Deploy the sender verticle after a delay
-    vertx.setTimer(2000, id -> vertx.deployVerticle(new MessageSender()));
+    Evenbusblockingtest1();
+//    Vertx vertx = Vertx.vertx();
+//    // Deploy the receiver verticle
+//    vertx.deployVerticle(new MessageReceiver(), new DeploymentOptions().setThreadingModel(ThreadingModel.EVENT_LOOP));
+////    // Deploy the sender verticle after a delay
+//    vertx.setTimer(2000, id -> vertx.deployVerticle(new MessageSender()));
   }
 
-//  private static void Evenbusblockingtest1() {
-//      Vertx vertx = Vertx.vertx();
-//
-//      vertx.eventBus().consumer("blocking.task", msg -> {
-//        System.out.println("Before Block " + Thread.currentThread().getName());
-//        try {
-//          Thread.sleep(5000);
-//          System.out.println("After Block " + Thread.currentThread().getName());
-//        } catch (InterruptedException e) {
-//          e.printStackTrace();
-//        }
-//        System.out.println("Task Completed: " + msg.body());
-//      });
-//
-//      vertx.eventBus().send("blocking.task", "Work 1");
-//      vertx.eventBus().send("blocking.task", "Work 2");
-//    }
+  private static void Evenbusblockingtest1() {
+      Vertx vertx = Vertx.vertx();
+
+      vertx.eventBus().consumer("blocking.task", msg -> {
+        System.out.println("Before Block " + Thread.currentThread().getName());
+        try {
+          Thread.sleep(5000);
+          System.out.println("After Block " + Thread.currentThread().getName());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        System.out.println("Task Completed: " + msg.body());
+      });
+
+      vertx.eventBus().send("blocking.task", "Work 1",new DeliveryOptions().setSendTimeout(3000));
+      vertx.eventBus().send("blocking.task", "Work 2");
+    }
 }
 
 class MessageReceiver extends AbstractVerticle {

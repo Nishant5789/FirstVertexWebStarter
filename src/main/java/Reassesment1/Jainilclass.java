@@ -22,8 +22,8 @@ public class Jainilclass extends AbstractVerticle {
 //        run().onComplete(result->{
 //            System.out.println(result.succeeded());
 //        });
-//
 //    }
+
   @Override
   public void start()
   {
@@ -32,6 +32,7 @@ public class Jainilclass extends AbstractVerticle {
 
   public static void main(String[] args) {
     Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(2));
+
     vertx.deployVerticle(Jainilclass.class.getName(),new DeploymentOptions()
       .setInstances(5).setThreadingModel(ThreadingModel.WORKER)
       .setWorkerPoolSize(5).setWorkerPoolName("workerpool"))
